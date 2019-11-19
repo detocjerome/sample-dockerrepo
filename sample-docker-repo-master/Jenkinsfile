@@ -10,8 +10,8 @@ node {
         }
 
         stage('clean') {
-            sh "chmod +x mvnw"
-            sh "./mvnw clean"
+            sh "chmod +x sample-dockerrepo/mvnw"
+            sh "./sample-dockerrepo/mvnw clean"
         }
 
         stage('backend tests') {
@@ -26,12 +26,12 @@ node {
         
          stage('quality analysis') {
             withSonarQubeEnv('Sonar') {
-                sh "./mvnw sonar:sonar"
+                sh "./sample-dockerrepo/mvnw sonar:sonar"
             }
         }
         
         stage('packaging') {
-            sh "./mvnw package -DskipTests"
+            sh "./sample-dockerrepo/mvnw package -DskipTests"
             archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
         }
         
